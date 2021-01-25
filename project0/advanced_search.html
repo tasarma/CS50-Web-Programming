@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Google Advanced Search</title>
+		<style>
+			body {
+				margin: 0px;
+				height: 100hv;
+				font-family: Arial, sans-serif;
+			}
+			input {
+				font-size: 16px;
+				width: 30px;
+				padding: 13px 0;
+			}
+			input[type=text] {
+				color: #464646;
+				margin: 0 0 0 5px;
+				
+			}
+			input[type=submit] {
+				font-size: 14px;
+				width: 150px;
+				border-width: 0px;
+				border-radius: 15px;
+				margin: 20px;
+				right: 20%;
+			}
+			
+			input.button {
+				background-color: dodgerblue;
+				color: white;
+				font-size: smaller;
+				max-width: 200px;
+				border-radius: 0px;
+				border: 1px;
+				padding: 10px 2px;
+				margin: 0;
+				float: right;
+			}
+			
+			.in {
+				margin: 100px 40px;
+			}
+			.in label{
+				display: inline-block;
+				width: 16%;
+				font-size: 20px;
+			}
+			#s {
+                position: absolute;
+				top: 0%;
+				right: 5%;
+				margin: 10px;
+            }
+			
+			.in .whitespace {
+				display: inline-block;
+				width: 50%;
+			}
+			
+            .in .form {
+				display: flex;
+				align-items: center;
+				margin-top: 10px;
+				padding: 10px 0;
+			}
+			.in .form label {
+				width: 16%;
+				font-size: 14px;
+			}
+			.in .form input[type=text]{
+				width: 49%;
+				padding: 2px 0;
+			}
+			.in .form .explanation{
+				font-size: 11px;
+				width: 30%;
+				margin-left: 1%;
+			}
+			.appbar {
+				margin: 60px 10px;
+			}
+			.appbar label {
+				color: #d93025;
+				font-size: 20px;
+				margin: 50px 30px;
+			}
+
+		</style>
+    </head>
+    <body>
+        <a id="s" href="index.html">Google Search</a>
+		<div class="appbar">
+			<label>Advanced Search</label>
+		</div>
+		<div class="in">
+			<form action="https://www.google.com/search">
+				<label>Find pages with...</label>
+				<div class="whitespace"></div>
+				<label>To do this in the search box.</label>
+				
+				<div class="form">
+					<label>All these words:</label>
+					<input type="text" name="as_q">
+					<div class="explanation">
+						Type the important words: tri-colour rat terrier
+					</div>
+				</div>
+				
+				<div class="form">
+					<label>This exact word or phrase:</label>
+					<input type="text" name="as_epq">
+					<div class="explanation">
+						Put exact words in quotes: "rat terrier"
+					</div>
+				</div>
+				
+				<div class="form">
+					<label>Any of these words:</label>
+					<input type="text" name="as_oq">
+					<div class="explanation">
+						Type OR between all the words you want: miniature OR standard
+					</div>
+				</div>
+				
+				<div class="form">
+					<label>Any of these words:</label>
+					<input type="text" name="as_oq">
+					<div class="explanation">
+						 Put a minus sign just before words that you don't want: -rodent, -"Jack Russell"
+					</div>
+				</div>
+				<div class="form">
+					<label></label
+					<div class="align">
+						<input type="submit" class="button" value="Advanced Search">
+					</div>
+				</div>
+			</form>
+		</div>
+    </body>
+</html>
+
