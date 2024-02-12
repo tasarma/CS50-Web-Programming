@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Google Image Search</title>
-        <style>
-            #s {
-                position: absolute;
-				right: 5%;
-				margin: 10px;
-            }
-            
-            body {
-                text-align: center;
-            }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Google Image Search</title>
+		<style>
+			a {
+			    color: white;
+			    text-decoration: none;
+			    font-family: arial,sans-serif;
+			    font-size: 12px;
+			}
 
-            input[type=text]{
-				border-radius: 25px;
-                position: absolute;
-                top: 40%;
-				left: 35%;
-				width: 30%;
-				height: 7%;
-                text-align: center;
-                font-size: 20px;
-            }
+			body {
+			    background: #202124;
+			    text-align: center;
+			}
+
+			.gg {
+				position: absolute;
+				right: 5%;
+			}
+
+			input[type=text]{
+				display: flex;
+				z-index: 3;
+				position: absolute;
+				top: 40%;
+				left: 30%;
+				min-height: 44px;
+				border: 1px solid #5f6368;
+				box-shadow: none;
+				border-radius: 24px;
+				margin: 0 auto;
+				width: 40%;
+				background-color: #303134;
+			}
+
 			input[type=submit]{
-                position: absolute;
-                top: 50%;
-				left: 45%;
-				border-radius: 25px;
-                text-align: center;
-				font-size: 15px;
-            }
+				background-color: #303134;
+				border: 1px solid #303134;
+				border-radius: 4px;
+				color: #e8eaed;
+				font-family: arial,sans-serif;
+				font-size: 14px;
+				margin: 11px 4px;
+				padding: 0 16px;
+				line-height: 27px;
+				height: 36px;
+				min-width: 54px;
+				text-align: center;
+				cursor: pointer;
+				user-select: none;
+				position: absolute;
+				top: 50%;
+				left: 43%;
+				width: 13%;
+
+			}
+
 			#lg {
 				position: absolute;
 				top: 25%;
 				left: 40%;
 			}
-			.sub-text{
-				position: absolute;
-				top: 36%;
-				left: 56%;
-				color: blue;
-				background-color: white;
-				font-size: 17px;
-			}
-            
-        </style>
-    </head>
-    <body>
-        <a id="s" href="index.html">Google Search</a>
-		<img id="lg" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google logo" />
-        <div class="sub-text">
-            <span>images</span>
-        </div>
-		<form action="https://google.com/search">
-			<input type="hidden" name="tbm" value="isch">
-			<div>
-				<input type="text" name="q">
-				<input type="submit" value="Google Image Search">
-			</div>
-			
-        </form>
-    </body>
+		</style>
+	</head>
+	<body>
+		<div class="gg">
+			<a href="index.html">Google Search</a>
+		</div>
+		<div>
+			<img id="lg" alt="Google" height="92" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_272x92dp.png" width="272">
+		</div>
+		<div>
+			<form action="https://www.google.com/search">
+				<input type="hidden" name="tbm" value="isch">
+				<div>
+					<center>
+						<input type="text" name="q">
+						<input type="submit" value="Google Image Search" role="button" name="btnK">
+					</center>
+				</div>
+			</form>
+		</div>
+	</body>
 </html>
 
