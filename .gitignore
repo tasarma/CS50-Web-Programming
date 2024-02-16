@@ -1,0 +1,5 @@
+# Ignore migrations folder
+**/migrations/
+
+# Ignore __pycache__ folders
+**/__pycache__/
