@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.db import IntegrityError
+from django.http import HttpRequest
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -19,7 +21,7 @@ from .models import WatchList
 # from django.shortcuts import redirect
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     return render(
         request,
         'auctions/index.html',
@@ -29,7 +31,7 @@ def index(request):
     )
 
 
-def login_view(request):
+def login_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
 
         # Attempt to sign user in
@@ -53,12 +55,12 @@ def login_view(request):
         return render(request, 'auctions/login.html')
 
 
-def logout_view(request):
+def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
-def register(request):
+def register(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -93,7 +95,7 @@ def register(request):
         return render(request, 'auctions/register.html')
 
 
-def create_listing(request):
+def create_listing(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         data = CreateListing()
         data.owner = request.user.username
@@ -115,7 +117,7 @@ def create_listing(request):
         return render(request, 'auctions/createlisting.html')
 
 
-def listing_page(request, key):
+def listing_page(request: HttpRequest, key: int) -> HttpResponse:
     if request.method == 'GET':
 
         # Check if there is listing
@@ -145,7 +147,7 @@ def listing_page(request, key):
         return HttpResponseRedirect(reverse('index'))
 
 
-def addToWatchlist(request, key):
+def addToWatchlist(request: HttpRequest, key: int) -> HttpResponse:
     if request.user.username:
         watchlisting = WatchList()
         watchlisting.user = request.user.username
@@ -156,7 +158,7 @@ def addToWatchlist(request, key):
         return HttpResponseRedirect(reverse('index'))
 
 
-def removeFromWatchlist(request, key):
+def removeFromWatchlist(request: HttpRequest, key: int) -> HttpResponse:
     if request.user.is_authenticated:
         try:
             watchlisting = WatchList.objects.get(
@@ -171,7 +173,7 @@ def removeFromWatchlist(request, key):
         return HttpResponseRedirect(reverse('index'))
 
 
-def addBid(request, key):
+def addBid(request: HttpRequest, key: int) -> HttpResponse:
     current_bid = CreateListing.objects.get(id=key).initialBid
     if request.method == 'POST':
         entered_bid = int(request.POST['bid'])
@@ -208,11 +210,11 @@ def addBid(request, key):
         return HttpResponseRedirect(reverse('index'))
 
 
-def closeBid(request, key):
+def closeBid(request: HttpRequest, key: int) -> HttpResponse:
     return HttpResponseRedirect(reverse('listing_page', args=(key,)))
 
 
-def watchList(request, username):
+def watchList(request: HttpRequest, username: str) -> HttpResponse:
     if request.user.is_authenticated:
         try:
             userData = WatchList.objects.filter(user=request.user.username)
