@@ -15,6 +15,7 @@ function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -34,14 +35,14 @@ function fetch_emails(mailbox) {
 }
 
 function display_emails(emails, mailbox) {
-  const emails_view = document.getElementById('emails-view');
+  const emails_view = document.querySelector('#emails-view');
   emails_view.innerHTML = '';
 
   emails_view.innerHTML += `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
   emails.forEach(email => {
     const email_div = document.createElement('div');
-    email_div.style.backgroundColor = email.read ? 'lightgray' : 'white';
+    email_div.style.backgroundColor = email.read ? 'white' : 'gray';
     email_div.innerHTML = `
         <table class="table">
           <tbody>
@@ -54,6 +55,7 @@ function display_emails(emails, mailbox) {
             </tbody>
           </table>
       `;
+      email_div.addEventListener('click', () => load_mail(email.id, mailbox));
     emails_view.appendChild(email_div);
   });
 }
@@ -64,6 +66,7 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 }
 
@@ -85,4 +88,29 @@ function send_email() {
     load_mailbox('sent');
   })
   return false;
+}
+
+function load_mail(email_id, mailbox) {
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'block';
+
+  fetch(`emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      read: true
+    })
+  })
+
+  fetch(`emails/${email_id}`)
+  .then(response => response.json())
+  .then(email => {
+    let email_view = document.querySelector('#email-view');
+    email_view.innerHTML = `
+          <div><strong>From:</strong> ${email.sender}</div>
+          <div><strong>To:</strong> ${email.recipients}</div>
+          <div><strong>Subject:</strong> ${email.subject}</div>
+          <div><strong>Timestamp:</strong> ${email.timestamp}</div>
+          <div>${email.body}</div>
+        `;
+  })
 }
