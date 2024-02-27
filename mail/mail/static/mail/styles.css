@@ -16,3 +16,15 @@ textarea {
 .table:hover {
     background-color: rgb(0, 140, 255); /* Change background color on hover */
 }
+
+.btn-email {
+    margin: 10px auto;
+    padding: 5px 10px;
+    /* width: 50px; */
+    border: none;
+    border-radius: 5px;
+    box-sizing: content-box;
+    background-color: #34495ec4;
+    color: white;
+    text-align: center;
+}
