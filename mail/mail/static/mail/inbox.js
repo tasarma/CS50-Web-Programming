@@ -66,8 +66,8 @@ function display_sent(emails, mailbox) {
     `;
     emails_view.appendChild(email_div);
     email_div.addEventListener("click", () => load_mail(email.id, mailbox));
-  })
-};
+  });
+}
 
 function display_inbox_archieved(emails, mailbox) {
   const emails_view = document.querySelector("#emails-view");
@@ -109,20 +109,21 @@ function display_inbox_archieved(emails, mailbox) {
           archived: newArchiveStatus,
         }),
       })
-      .then(() => {
-        // Update the email object in the emails array with the new archived status
-        email.archived = newArchiveStatus;
-        // Update the text content of the button
-        archiveButton.textContent = newArchiveStatus ? "Unarchive" : "Archive";
-        load_mailbox("inbox");
-      })
-      .catch(error => {
-        console.error('Error archiving email:', error);
-      });
+        .then(() => {
+          // Update the email object in the emails array with the new archived status
+          email.archived = newArchiveStatus;
+          // Update the text content of the button
+          archiveButton.textContent = newArchiveStatus
+            ? "Unarchive"
+            : "Archive";
+          load_mailbox("inbox");
+        })
+        .catch((error) => {
+          console.error("Error archiving email:", error);
+        });
     });
   });
 }
-
 
 function load_mailbox(mailbox) {
   fetch_emails(mailbox);
@@ -175,7 +176,26 @@ function load_mail(email_id, mailbox) {
           <div><strong>To:</strong> ${email.recipients}</div>
           <div><strong>Subject:</strong> ${email.subject}</div>
           <div><strong>Timestamp:</strong> ${email.timestamp}</div>
+          <div><button class="btn-email" id="reply">Reply</button></div>
           <div>${email.body}</div>
         `;
+
+      document.querySelector("#reply").addEventListener("click", (event) => {
+        event.stopPropagation();
+        console.log(email);
+        compose_email();
+
+        document.querySelector("#compose-recipients").value = email.sender;
+
+        let subject = email.subject.startsWith("Re: ")
+          ? email.subject
+          : `Re: ${email.subject}`;
+        document.querySelector("#compose-subject").value = subject;
+
+        const current_datetime = new Date().toLocaleString();
+        const body_prefix = `On ${current_datetime} ${email.sender} wrote:\n`;
+        const pre_filled_body = `${body_prefix}${email.body}`;
+        document.querySelector("#compose-body").value = pre_filled_body;
+      });
     });
 }
