@@ -1,0 +1,11 @@
+.form-container {
+    position: relative;
+    left: 0px;
+    margin: 1%;
+    padding: 1%;
+    border: 1px solid #00000021;
+}
+
+.bold-text {
+  font-weight: bold;
+}

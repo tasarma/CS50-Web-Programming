@@ -8,12 +8,29 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from .models import NewPost
 from .models import User
+# import json
+# from django.contrib.auth.decorators import login_required
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+
 # from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, 'network/index.html')
+    if request.user.is_authenticated:
+        posts = NewPost.objects.all()
+        posts = posts.order_by('-timestamp').all()
+        return render(
+            request,
+            'network/index.html',
+            {
+                'posts': posts,
+            },
+        )
+    else:
+        return HttpResponseRedirect(reverse('login'))
 
 
 def login_view(request):
@@ -30,7 +47,9 @@ def login_view(request):
             return HttpResponseRedirect(reverse('index'))
         else:
             return render(
-                request, 'network/login.html', {
+                request,
+                'network/login.html',
+                {
                     'message': 'Invalid username and/or password.',
                 },
             )
@@ -53,7 +72,9 @@ def register(request):
         confirmation = request.POST['confirmation']
         if password != confirmation:
             return render(
-                request, 'network/register.html', {
+                request,
+                'network/register.html',
+                {
                     'message': 'Passwords must match.',
                 },
             )
@@ -64,7 +85,9 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(
-                request, 'network/register.html', {
+                request,
+                'network/register.html',
+                {
                     'message': 'Username already taken.',
                 },
             )
@@ -72,3 +95,15 @@ def register(request):
         return HttpResponseRedirect(reverse('index'))
     else:
         return render(request, 'network/register.html')
+
+
+def new_post(request):
+    if request.method == 'POST':
+        user = request.user
+        body = request.POST.get('new-post-body', '')
+        new_post = NewPost(user=user, body=body)
+        new_post.save()
+        return render(request, 'network/index.html', {'body': body})
+    else:
+        return render(request, 'network/new_post.html')
+        # return JsonResponse({"error": "POST request required."}, status=400)

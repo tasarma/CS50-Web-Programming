@@ -1,0 +1,19 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container form-container">
+    <div class="mb-3" id="new-post-view">
+        <form action="{% url 'new_post' %}" method="post">
+            {% csrf_token %}
+            <label for="exampleFormControlInput1" class="form-label bold-text">New Post</label>
+            <textarea class="form-control" type="text" name="new-post-body" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% comment %} {% block script %}
+<script src="{% static 'network/inbox.js' %}"></script>
+{% endblock %} {% endcomment %}

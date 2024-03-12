@@ -1,5 +1,16 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
-    TODO
+<h1>All Posts</h1>
+{% for post in posts %}
+    <div class="container form-container">
+        <strong> {{ post.user.username }} </strong> <br>
+        <div class="fw-light">
+            {{ post.body }} <br>
+            {{ post.timestamp }} <br>
+            {{ post.number_of_likes }} <br>
+        </div>
+    </div>
+{% endfor %}
 {% endblock %}
