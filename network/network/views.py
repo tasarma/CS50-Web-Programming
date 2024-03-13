@@ -5,17 +5,12 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import NewPost
 from .models import User
-# import json
-# from django.contrib.auth.decorators import login_required
-# from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-
-# from django.http import HttpResponse
 
 
 def index(request):
@@ -101,9 +96,14 @@ def new_post(request):
     if request.method == 'POST':
         user = request.user
         body = request.POST.get('new-post-body', '')
+        if not body:
+            return render(
+                request,
+                'network/new_post.html',
+                {'error': 'Please enter a text for your new post.'},
+            )
         new_post = NewPost(user=user, body=body)
         new_post.save()
-        return render(request, 'network/index.html', {'body': body})
+        return redirect('index')
     else:
         return render(request, 'network/new_post.html')
-        # return JsonResponse({"error": "POST request required."}, status=400)
