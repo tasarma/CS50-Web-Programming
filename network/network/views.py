@@ -172,3 +172,27 @@ def follow_user(request, username: str):
             return JsonResponse({'is_following': False}, status=201)
     else:
         return HttpResponseRedirect(reverse('index'))
+
+
+@csrf_exempt
+@login_required
+def following(request):
+    try:
+        user = User.objects.get(username=request.user.username)
+        user_profile = Profile.objects.get(user=user)
+        followings = user_profile.following.all()
+    except User.DoesNotExist:
+        pass
+
+    if request.method == 'GET':
+        posts = NewPost.objects.filter(user__in=followings)
+        posts = posts.order_by('-timestamp').all()
+        return render(
+            request,
+            'network/index.html',
+            {
+                'posts': posts,
+            },
+        )
+    else:
+        return HttpResponseRedirect(reverse('login'))
