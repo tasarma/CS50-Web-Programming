@@ -1,0 +1,42 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+    <h1><strong>{{ viewed_user.username }}</strong></h1>
+    <div >
+        <p><strong>Followers:</strong> {{ follower }}</p>
+        <p><strong>Following:</strong> {{ following }}</p>
+    </div>
+    {% if user != viewed_user%}
+        <div id="follow-button-container">
+            <button id="follow-button" type="button" class="btn btn-primary" data-username="{{ viewed_user.username }}">
+                {% if is_following %}
+                    Unfollow
+                {% else %}
+                    Follow
+                {% endif %}
+            </button>
+        </div>
+    {% endif %}
+</div>
+
+{% for post in posts %}
+    <div class="container form-container fw-light">
+            {{ post.body }} <br>
+            {{ post.timestamp }} <br>
+            <i class="fa fa-heart" style="font-size:15px;color:red"></i>
+            {{ post.number_of_likes }} <br>
+    </div>
+{% empty %}
+    <div class="container form-container">
+        <h3>No posts found...</h3>
+    </div>
+{% endfor %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/inbox.js' %}"></script>
+{% endblock %}
