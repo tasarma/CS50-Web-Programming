@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -21,11 +22,16 @@ def index(request):
     if request.user.is_authenticated:
         posts = NewPost.objects.all()
         posts = posts.order_by('-timestamp').all()
+
+        paginator = Paginator(posts, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         return render(
             request,
             'network/index.html',
             {
-                'posts': posts,
+                # 'posts': posts,
+                'page_obj': page_obj,
             },
         )
     else:

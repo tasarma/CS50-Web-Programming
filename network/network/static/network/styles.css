@@ -6,6 +6,11 @@
     border: 1px solid #00000021;
 }
 
+.pagination-container {
+    position: relative;
+    margin: 1%;
+}
+
 .bold-text {
   font-weight: bold;
 }
